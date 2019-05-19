@@ -1,8 +1,17 @@
-const express = require('express');
+const express = require("express");
+const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5000;
-
 const app = express();
 
-app.get('/', (req, res) => res.send('Hello World!'));
+// DB Config
+const db = require("./config/keys").mongoURI;
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+// Connect to MongoDB
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => console.log("MongoDB Connected"))
+  .catch(e => console.log(e));
+
+app.get("/", (req, res) => res.send("Hello World!"));
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
